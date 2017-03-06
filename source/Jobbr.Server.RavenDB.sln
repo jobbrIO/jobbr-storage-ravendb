@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{FA37061C-BB48-421E-AC29-7414CF6EBB9D}"
+	ProjectSection(SolutionItems) = preProject
+		..\appveyor.yml = ..\appveyor.yml
+		..\GitVersion.yml = ..\GitVersion.yml
+		Jobbr.Server.RavenDB.nuspec = Jobbr.Server.RavenDB.nuspec
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jobbr.Server.RavenDB", "Jobbr.Server.RavenDB\Jobbr.Server.RavenDB.csproj", "{C5A06ECA-ED05-42D8-986E-6709E67237EA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jobbr.Server.RavenDB.Tests", "Jobbr.Server.RavenDB.Tests\Jobbr.Server.RavenDB.Tests.csproj", "{4AEEDBEE-AEFD-473E-B3D9-E5C913EED3C4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C5A06ECA-ED05-42D8-986E-6709E67237EA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5A06ECA-ED05-42D8-986E-6709E67237EA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5A06ECA-ED05-42D8-986E-6709E67237EA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5A06ECA-ED05-42D8-986E-6709E67237EA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4AEEDBEE-AEFD-473E-B3D9-E5C913EED3C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4AEEDBEE-AEFD-473E-B3D9-E5C913EED3C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4AEEDBEE-AEFD-473E-B3D9-E5C913EED3C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4AEEDBEE-AEFD-473E-B3D9-E5C913EED3C4}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
