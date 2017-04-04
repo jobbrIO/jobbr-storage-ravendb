@@ -3,6 +3,8 @@ using System.Globalization;
 using Jobbr.ComponentModel.JobStorage.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Raven.Client.Document;
+using Raven.Client.Embedded;
+using Raven.Database.Config;
 using Raven.Tests.Helpers;
 
 namespace Jobbr.Server.RavenDB.Tests
@@ -17,6 +19,13 @@ namespace Jobbr.Server.RavenDB.Tests
         {
             // ReSharper disable once ExplicitCallerInfoArgument
             _store = this.NewRemoteDocumentStore(databaseName: "RavenDbStorageProviderTests");
+        }
+
+        protected override void ModifyConfiguration(InMemoryRavenConfiguration configuration)
+        {
+            base.ModifyConfiguration(configuration);
+
+            configuration.Storage.Voron.AllowOn32Bits = true;
         }
 
         private void GivenStorageProvider()

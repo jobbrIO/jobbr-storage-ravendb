@@ -24,9 +24,6 @@ build:
   project: source/Jobbr.Server.RavenDB.sln
 
 after_build:
-  - cmd: nuget install ILMerge -ExcludeVersion
-  - cmd: mkdir ilmerged
-  - cmd: ILMerge\tools\ILMerge.exe /out:ilmerged/Jobbr.Server.RavenDB.dll source/Jobbr.Server.RavenDB/bin/Release/Jobbr.Server.RavenDB.dll /target:library /targetplatform:v4,C:\Windows\Microsoft.NET\Framework64\v4.0.30319 /wildcards /internalize:internalize_exclude.txt 
   - cmd: nuget pack source\Jobbr.Server.RavenDB.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
   - cmd: appveyor PushArtifact "Jobbr.Server.RavenDB.%GitVersion_NuGetVersion%.nupkg"
 

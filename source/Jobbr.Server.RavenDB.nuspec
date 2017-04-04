@@ -17,7 +17,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="..\ilmerged\Jobbr.Server.RavenDB.dll" target="lib\net45"/>
-    <file src="..\ilmerged\Jobbr.Server.RavenDB.pdb" target="lib\net45"/>
+    <file src="Jobbr.Server.RavenDB/bin/Release/Jobbr.Server.RavenDB.dll" target="lib\net45"/>
+    <file src="Jobbr.Server.RavenDB/bin/Release/Jobbr.Server.RavenDB.pdb" target="lib\net45"/>
   </files>
 </package>
