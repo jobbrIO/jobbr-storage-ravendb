@@ -14,7 +14,7 @@ namespace Jobbr.Server.RavenDB
 
             builder.Add<JobbrRavenDbConfiguration>(ravenConfiguration);
 
-            builder.Register<IJobStorageProvider>(typeof(JobbrRavenDbConfiguration));
+            builder.Register<IJobStorageProvider>(typeof(RavenDbStorageProvider));
             builder.Register<IConfigurationValidator>(typeof(RavenDbConfigurationValidator));
         }
     }
