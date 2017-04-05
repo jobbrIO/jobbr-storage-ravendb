@@ -59,9 +59,9 @@ namespace Jobbr.Server.RavenDB
 
                 var triggers = new List<JobTriggerBase>(job.TriggerCount);
 
-                triggers.AddRange(job.InstantTriggers.Select(trigger => trigger.ToModel()));
-                triggers.AddRange(job.ScheduledTriggers.Select(trigger => trigger.ToModel()));
-                triggers.AddRange(job.RecurringTriggers.Select(trigger => trigger.ToModel()));
+                triggers.AddRange(job.InstantTriggers.Select(trigger => trigger.ToModel(jobId)));
+                triggers.AddRange(job.ScheduledTriggers.Select(trigger => trigger.ToModel(jobId)));
+                triggers.AddRange(job.RecurringTriggers.Select(trigger => trigger.ToModel(jobId)));
 
                 return triggers;
             }
@@ -159,9 +159,9 @@ namespace Jobbr.Server.RavenDB
 
                 foreach (var job in jobs)
                 {
-                    activeTriggers.AddRange(job.InstantTriggers.Where(p => p.IsActive).Select(trigger => trigger.ToModel()));
-                    activeTriggers.AddRange(job.ScheduledTriggers.Where(p => p.IsActive).Select(trigger => trigger.ToModel()));
-                    activeTriggers.AddRange(job.RecurringTriggers.Where(p => p.IsActive).Select(trigger => trigger.ToModel()));
+                    activeTriggers.AddRange(job.InstantTriggers.Where(p => p.IsActive).Select(trigger => trigger.ToModel(job.Id.ParseId())));
+                    activeTriggers.AddRange(job.ScheduledTriggers.Where(p => p.IsActive).Select(trigger => trigger.ToModel(job.Id.ParseId())));
+                    activeTriggers.AddRange(job.RecurringTriggers.Where(p => p.IsActive).Select(trigger => trigger.ToModel(job.Id.ParseId())));
                 }
 
                 return activeTriggers;
@@ -178,18 +178,18 @@ namespace Jobbr.Server.RavenDB
                 var instantTrigger = trigger as Model.InstantTrigger;
                 if (instantTrigger != null)
                 {
-                    return instantTrigger.ToModel();
+                    return instantTrigger.ToModel(jobId);
                 }
 
                 var scheduledTrigger = trigger as Model.ScheduledTrigger;
                 if (scheduledTrigger != null)
                 {
-                    return scheduledTrigger.ToModel();
+                    return scheduledTrigger.ToModel(jobId);
                 }
 
                 var recurringTrigger = trigger as Model.RecurringTrigger;
 
-                return recurringTrigger?.ToModel();
+                return recurringTrigger?.ToModel(jobId);
             }
         }
 

@@ -50,7 +50,7 @@ namespace Jobbr.Server.RavenDB.Mapping
             };
         }
 
-        public static ComponentModel.JobStorage.Model.RecurringTrigger ToModel(this RecurringTrigger src)
+        public static ComponentModel.JobStorage.Model.RecurringTrigger ToModel(this RecurringTrigger src, long jobId)
         {
             return new ComponentModel.JobStorage.Model.RecurringTrigger
             {
@@ -64,7 +64,8 @@ namespace Jobbr.Server.RavenDB.Mapping
                 StartDateTimeUtc = src.StartDateTimeUtc,
                 EndDateTimeUtc = src.EndDateTimeUtc,
                 NoParallelExecution = src.NoParallelExecution,
-                Definition = src.Definition
+                Definition = src.Definition,
+                JobId = jobId
             };
         }
 
@@ -83,7 +84,7 @@ namespace Jobbr.Server.RavenDB.Mapping
             };
         }
 
-        public static ComponentModel.JobStorage.Model.ScheduledTrigger ToModel(this ScheduledTrigger src)
+        public static ComponentModel.JobStorage.Model.ScheduledTrigger ToModel(this ScheduledTrigger src, long jobId)
         {
             return new ComponentModel.JobStorage.Model.ScheduledTrigger
             {
@@ -94,7 +95,8 @@ namespace Jobbr.Server.RavenDB.Mapping
                 IsActive = src.IsActive,
                 UserId = src.UserId,
                 Comment = src.Comment,
-                UserDisplayName = src.UserDisplayName
+                UserDisplayName = src.UserDisplayName,
+                JobId = jobId
             };
         }
 
@@ -113,7 +115,7 @@ namespace Jobbr.Server.RavenDB.Mapping
             };
         }
 
-        public static ComponentModel.JobStorage.Model.InstantTrigger ToModel(this InstantTrigger src)
+        public static ComponentModel.JobStorage.Model.InstantTrigger ToModel(this InstantTrigger src, long jobId)
         {
             return new ComponentModel.JobStorage.Model.InstantTrigger
             {
@@ -124,7 +126,8 @@ namespace Jobbr.Server.RavenDB.Mapping
                 Comment = src.Comment,
                 UserId = src.UserId,
                 UserDisplayName = src.UserDisplayName,
-                DelayedMinutes = src.DelayedMinutes
+                DelayedMinutes = src.DelayedMinutes,
+                JobId = jobId
             };
         }
 
