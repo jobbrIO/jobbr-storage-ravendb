@@ -7,7 +7,7 @@ namespace Jobbr.Server.RavenDB.Model
 {
     public class Job
     {
-        public const string CollectionPrefix = "jobs";
+        public const string CollectionPrefix = "Jobs";
 
         public Job()
         {

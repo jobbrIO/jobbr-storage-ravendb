@@ -131,13 +131,12 @@ namespace Jobbr.Server.RavenDB.Mapping
             };
         }
 
-        public static JobRun ToEntity(this ComponentModel.JobStorage.Model.JobRun src)
+        public static JobRun ToEntity(this ComponentModel.JobStorage.Model.JobRun src, Job job)
         {
             return new JobRun
             {
                 Id  = src.Id > 0 ? $"{JobRun.CollectionPrefix}/{src.Id}" : null,
-                JobId = $"{Job.CollectionPrefix}/{src.JobId}",
-                TriggerId = src.TriggerId,
+                Job = job,
                 ActualEndDateTimeUtc = src.ActualEndDateTimeUtc,
                 ActualStartDateTimeUtc = src.ActualStartDateTimeUtc,
                 EstimatedEndDateTimeUtc = src.EstimatedEndDateTimeUtc,
@@ -155,8 +154,7 @@ namespace Jobbr.Server.RavenDB.Mapping
             return new ComponentModel.JobStorage.Model.JobRun
             {
                 Id = src.Id.ParseId(),
-                JobId = src.JobId.ParseId(),
-                TriggerId = src.TriggerId,
+                JobId = src.Job.Id.ParseId(),
                 ActualEndDateTimeUtc = src.ActualEndDateTimeUtc,
                 ActualStartDateTimeUtc = src.ActualStartDateTimeUtc,
                 EstimatedEndDateTimeUtc = src.EstimatedEndDateTimeUtc,

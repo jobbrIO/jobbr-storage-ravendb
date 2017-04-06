@@ -4,11 +4,10 @@ namespace Jobbr.Server.RavenDB.Model
 {
     public class JobRun
     {
-        public static string CollectionPrefix = "jobruns";
+        public static string CollectionPrefix = "JobRuns";
 
         public string Id { get; set; }
-        public string JobId { get; set; }
-        public long TriggerId { get; set; }
+        public Job Job { get; set; }
         public JobRunStates State { get; set; }
         public double? Progress { get; set; }
         public DateTime PlannedStartDateTimeUtc { get; set; }
@@ -21,5 +20,7 @@ namespace Jobbr.Server.RavenDB.Model
         
         public string UserId { get; set; }
         public string UserDisplayName { get; set; }
+
+        public JobTriggerBase Trigger { get; set; }
     }
 }

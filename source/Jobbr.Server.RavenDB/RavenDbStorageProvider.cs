@@ -230,16 +230,17 @@ namespace Jobbr.Server.RavenDB
 
         public void AddJobRun(JobRun jobRun)
         {
-            var entity = jobRun.ToEntity();
-
             using (var session = _documentStore.OpenSession())
             {
                 var job = session.Load<Model.Job>(jobRun.JobId);
+                var entity = jobRun.ToEntity(job);
                 var trigger = job.AllTriggers.First(p => p.Id == jobRun.TriggerId);
 
-                // denormalize user information
+                // denormalize data
                 entity.UserId = trigger.UserId;
                 entity.UserDisplayName = trigger.UserDisplayName;
+                entity.Job = job;
+                entity.Trigger = trigger;
 
                 session.Store(entity);
                 session.SaveChanges();
@@ -272,7 +273,8 @@ namespace Jobbr.Server.RavenDB
         {
             using (var session = _documentStore.OpenSession())
             {
-                var entity = jobRun.ToEntity();
+                var job = session.Load<Model.Job>(jobRun.JobId);
+                var entity = jobRun.ToEntity(job);
                 session.Store(entity);
                 session.SaveChanges();
             }
