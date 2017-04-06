@@ -273,8 +273,8 @@ namespace Jobbr.Server.RavenDB
         {
             using (var session = _documentStore.OpenSession())
             {
-                var job = session.Load<Model.Job>(jobRun.JobId);
-                var entity = jobRun.ToEntity(job);
+                var entity = session.Load<Model.JobRun>(jobRun.Id);
+                jobRun.ApplyTo(entity);
                 session.Store(entity);
                 session.SaveChanges();
             }

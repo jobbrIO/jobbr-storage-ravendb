@@ -135,7 +135,7 @@ namespace Jobbr.Server.RavenDB.Mapping
         {
             return new JobRun
             {
-                Id  = src.Id > 0 ? $"{JobRun.CollectionPrefix}/{src.Id}" : null,
+                Id = src.Id > 0 ? $"{JobRun.CollectionPrefix}/{src.Id}" : null,
                 Job = job,
                 ActualEndDateTimeUtc = src.ActualEndDateTimeUtc,
                 ActualStartDateTimeUtc = src.ActualStartDateTimeUtc,
@@ -145,8 +145,24 @@ namespace Jobbr.Server.RavenDB.Mapping
                 Pid = src.Pid,
                 PlannedStartDateTimeUtc = src.PlannedStartDateTimeUtc,
                 Progress = src.Progress,
-                State = (JobRunStates) src.State
+                State = (JobRunStates)src.State
             };
+        }
+
+        public static JobRun ApplyTo(this ComponentModel.JobStorage.Model.JobRun src, JobRun targetEntity)
+        {
+            targetEntity.Id = src.Id > 0 ? $"{JobRun.CollectionPrefix}/{src.Id}" : null;
+            targetEntity.ActualEndDateTimeUtc = src.ActualEndDateTimeUtc;
+            targetEntity.ActualStartDateTimeUtc = src.ActualStartDateTimeUtc;
+            targetEntity.EstimatedEndDateTimeUtc = src.EstimatedEndDateTimeUtc;
+            targetEntity.InstanceParameters = src.InstanceParameters;
+            targetEntity.JobParameters = src.JobParameters;
+            targetEntity.Pid = src.Pid;
+            targetEntity.PlannedStartDateTimeUtc = src.PlannedStartDateTimeUtc;
+            targetEntity.Progress = src.Progress;
+            targetEntity.State = (JobRunStates)src.State;
+
+            return targetEntity;
         }
 
         public static ComponentModel.JobStorage.Model.JobRun ToModel(this JobRun src)
@@ -163,7 +179,8 @@ namespace Jobbr.Server.RavenDB.Mapping
                 Pid = src.Pid,
                 PlannedStartDateTimeUtc = src.PlannedStartDateTimeUtc,
                 Progress = src.Progress,
-                State = (ComponentModel.JobStorage.Model.JobRunStates) src.State
+                State = (ComponentModel.JobStorage.Model.JobRunStates)src.State,
+                TriggerId = src.Trigger.Id
             };
         }
     }

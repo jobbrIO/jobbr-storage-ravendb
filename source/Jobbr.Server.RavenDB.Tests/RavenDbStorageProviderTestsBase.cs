@@ -625,7 +625,7 @@ namespace Jobbr.Server.RavenDB.Tests
 
             StorageProvider.Update(jobRun);
 
-            var job1Reloaded = StorageProvider.GetJobRunById(job1.Id);
+            var job1Reloaded = StorageProvider.GetJobRunById(jobRun.Id);
 
             Assert.AreEqual("test-jobparameters", job1Reloaded.JobParameters);
             Assert.AreEqual("test-instanceparameters", job1Reloaded.InstanceParameters);
