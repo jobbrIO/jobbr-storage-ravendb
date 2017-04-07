@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace Jobbr.Server.RavenDB.Tests
 {
     [TestClass]
-    public class ServerRegistrationTestsBase : RavenDbIntegrationTestBase
+    public class ServerRegistrationTests : RavenDbIntegrationTestBase
     {
         [TestMethod]
         public void RegisteredAsComponent_JobbrIsStarted_ProviderHasCorrectType()
