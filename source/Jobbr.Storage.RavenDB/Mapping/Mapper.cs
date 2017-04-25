@@ -1,6 +1,6 @@
-﻿using Jobbr.Server.RavenDB.Model;
+﻿using Jobbr.Storage.RavenDB.Model;
 
-namespace Jobbr.Server.RavenDB.Mapping
+namespace Jobbr.Storage.RavenDB.Mapping
 {
     public static class Mapper
     {

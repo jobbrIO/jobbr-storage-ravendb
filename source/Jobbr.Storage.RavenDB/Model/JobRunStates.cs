@@ -1,4 +1,4 @@
-﻿namespace Jobbr.Server.RavenDB.Model
+﻿namespace Jobbr.Storage.RavenDB.Model
 {
     public enum JobRunStates
     {

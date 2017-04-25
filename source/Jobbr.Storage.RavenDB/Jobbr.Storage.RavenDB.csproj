@@ -7,8 +7,8 @@
     <ProjectGuid>{C5A06ECA-ED05-42D8-986E-6709E67237EA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Jobbr.Server.RavenDB</RootNamespace>
-    <AssemblyName>Jobbr.Server.RavenDB</AssemblyName>
+    <RootNamespace>Jobbr.Storage.RavenDB</RootNamespace>
+    <AssemblyName>Jobbr.Storage.RavenDB</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />

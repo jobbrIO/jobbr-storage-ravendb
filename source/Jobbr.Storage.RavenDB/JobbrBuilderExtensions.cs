@@ -2,7 +2,7 @@
 using Jobbr.ComponentModel.JobStorage;
 using Jobbr.ComponentModel.Registration;
 
-namespace Jobbr.Server.RavenDB
+namespace Jobbr.Storage.RavenDB
 {
     public static class JobbrBuilderExtensions
     {

@@ -1,8 +1,9 @@
 ﻿using Jobbr.ComponentModel.Registration;
+using Jobbr.Server;
 using Jobbr.Server.Builder;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Jobbr.Server.RavenDB.Tests
+namespace Jobbr.Storage.RavenDB.Tests
 {
     [TestClass]
     public class ServerRegistrationTests : RavenDbIntegrationTestBase
@@ -16,8 +17,8 @@ namespace Jobbr.Server.RavenDB.Tests
 
             builder.AddRavenDbStorage(config =>
             {
-                config.Database = Store.DefaultDatabase;
-                config.Url = Store.Url;
+                config.Database = this.Store.DefaultDatabase;
+                config.Url = this.Store.Url;
             });
 
             builder.Create();
@@ -35,8 +36,8 @@ namespace Jobbr.Server.RavenDB.Tests
 
             builder.AddRavenDbStorage(config =>
             {
-                config.Database = Store.DefaultDatabase;
-                config.Url = Store.Url;
+                config.Database = this.Store.DefaultDatabase;
+                config.Url = this.Store.Url;
             });
 
             using (var server = builder.Create())

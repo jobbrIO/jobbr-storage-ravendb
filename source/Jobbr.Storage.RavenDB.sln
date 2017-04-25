@@ -7,12 +7,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "build", "build", "{FA37061C
 	ProjectSection(SolutionItems) = preProject
 		..\appveyor.yml = ..\appveyor.yml
 		..\GitVersion.yml = ..\GitVersion.yml
-		Jobbr.Server.RavenDB.nuspec = Jobbr.Server.RavenDB.nuspec
+		Jobbr.Storage.RavenDB.nuspec = Jobbr.Storage.RavenDB.nuspec
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jobbr.Server.RavenDB", "Jobbr.Server.RavenDB\Jobbr.Server.RavenDB.csproj", "{C5A06ECA-ED05-42D8-986E-6709E67237EA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jobbr.Storage.RavenDB", "Jobbr.Storage.RavenDB\Jobbr.Storage.RavenDB.csproj", "{C5A06ECA-ED05-42D8-986E-6709E67237EA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jobbr.Server.RavenDB.Tests", "Jobbr.Server.RavenDB.Tests\Jobbr.Server.RavenDB.Tests.csproj", "{4AEEDBEE-AEFD-473E-B3D9-E5C913EED3C4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Jobbr.Storage.RavenDB.Tests", "Jobbr.Storage.RavenDB.Tests\Jobbr.Storage.RavenDB.Tests.csproj", "{4AEEDBEE-AEFD-473E-B3D9-E5C913EED3C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

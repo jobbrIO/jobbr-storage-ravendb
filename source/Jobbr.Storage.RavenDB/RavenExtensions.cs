@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Raven.Client;
 using Raven.Client.Linq;
 
-namespace Jobbr.Server.RavenDB
+namespace Jobbr.Storage.RavenDB
 {
     public static class RavenExtensions
     {

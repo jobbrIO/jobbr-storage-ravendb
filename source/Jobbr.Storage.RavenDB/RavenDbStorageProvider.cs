@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using Jobbr.ComponentModel.JobStorage;
 using Jobbr.ComponentModel.JobStorage.Model;
-using Jobbr.Server.RavenDB.Mapping;
-using Jobbr.Server.RavenDB.Model.Index;
+using Jobbr.Storage.RavenDB.Mapping;
+using Jobbr.Storage.RavenDB.Model.Index;
 using Raven.Client;
 using Raven.Client.Document;
 using Raven.Client.Indexes;
 using Raven.Client.Linq;
 
-namespace Jobbr.Server.RavenDB
+namespace Jobbr.Storage.RavenDB
 {
     public class RavenDbStorageProvider : IJobStorageProvider
     {
@@ -18,20 +18,20 @@ namespace Jobbr.Server.RavenDB
 
         public RavenDbStorageProvider(JobbrRavenDbConfiguration configuration)
         {
-            _documentStore = new DocumentStore
+            this._documentStore = new DocumentStore
             {
                 Url = configuration.Url,
                 DefaultDatabase = configuration.Database
             };
 
-            _documentStore.Initialize(true);
+            this._documentStore.Initialize(true);
 
-            IndexCreation.CreateIndexes(typeof(RavenDbStorageProvider).Assembly, _documentStore);
+            IndexCreation.CreateIndexes(typeof(RavenDbStorageProvider).Assembly, this._documentStore);
         }
 
         public List<Job> GetJobs(int page = 0, int pageSize = 50)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var jobs = session.Query<Model.Job>().Skip(page * pageSize).Take(pageSize).ToList();
 
@@ -43,7 +43,7 @@ namespace Jobbr.Server.RavenDB
         {
             var entity = job.ToEntity();
 
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 session.Store(entity);
                 session.SaveChanges();
@@ -53,7 +53,7 @@ namespace Jobbr.Server.RavenDB
 
         public List<JobTriggerBase> GetTriggersByJobId(long jobId)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var job = session.Load<Model.Job>(jobId);
 
@@ -69,7 +69,7 @@ namespace Jobbr.Server.RavenDB
 
         public void AddTrigger(long jobId, RecurringTrigger trigger)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var job = session.Load<Model.Job>(jobId);
                 var entity = trigger.ToEntity();
@@ -88,7 +88,7 @@ namespace Jobbr.Server.RavenDB
 
         public void AddTrigger(long jobId, InstantTrigger trigger)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var job = session.Load<Model.Job>(jobId);
                 var entity = trigger.ToEntity();
@@ -107,7 +107,7 @@ namespace Jobbr.Server.RavenDB
 
         public void AddTrigger(long jobId, ScheduledTrigger trigger)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var job = session.Load<Model.Job>(jobId);
                 var entity = trigger.ToEntity();
@@ -126,7 +126,7 @@ namespace Jobbr.Server.RavenDB
 
         private void SetTriggerStatus(long jobId, long triggerId, bool isActive)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var job = session.Load<Model.Job>(jobId);
               
@@ -150,7 +150,7 @@ namespace Jobbr.Server.RavenDB
 
         public List<JobTriggerBase> GetActiveTriggers()
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var jobIds = session.Query<TriggerIndex.Result, TriggerIndex>().Where(p => p.IsActive).Select(s => s.JobId).ToList();
                 var jobs = session.Load<Model.Job>(jobIds);
@@ -170,7 +170,7 @@ namespace Jobbr.Server.RavenDB
 
         public JobTriggerBase GetTriggerById(long jobId, long triggerId)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var job = session.Load<Model.Job>(jobId);
                 var trigger = job.AllTriggers.First(p => p.Id == triggerId);
@@ -195,7 +195,7 @@ namespace Jobbr.Server.RavenDB
 
         public JobRun GetLastJobRunByTriggerId(long jobId, long triggerId, DateTime now)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var jobIdAsString = jobId.ToRavenId(Model.Job.CollectionPrefix);
                 var lastJobRun = session.Query<JobRunIndex.Result, JobRunIndex>()
@@ -212,7 +212,7 @@ namespace Jobbr.Server.RavenDB
 
         public JobRun GetNextJobRunByTriggerId(long jobId, long triggerId, DateTime now)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var jobIdAsString = jobId.ToRavenId(Model.Job.CollectionPrefix);
                 var lastJobRun = session.Query<JobRunIndex.Result, JobRunIndex>()
@@ -230,7 +230,7 @@ namespace Jobbr.Server.RavenDB
 
         public void AddJobRun(JobRun jobRun)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var job = session.Load<Model.Job>(jobRun.JobId);
                 var entity = jobRun.ToEntity(job);
@@ -251,7 +251,7 @@ namespace Jobbr.Server.RavenDB
 
         public List<JobRun> GetJobRuns(int page = 0, int pageSize = 50)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 return session.GetAll<Model.JobRun>().Skip(page * pageSize).Take(pageSize).ToList().Select(s => s.ToModel()).ToList();
             }
@@ -259,7 +259,7 @@ namespace Jobbr.Server.RavenDB
 
         public void UpdateProgress(long jobRunId, double? progress)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var jobRun = session.Load<Model.JobRun>(jobRunId);
                 jobRun.Progress = progress;
@@ -271,7 +271,7 @@ namespace Jobbr.Server.RavenDB
 
         public void Update(JobRun jobRun)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var entity = session.Load<Model.JobRun>(jobRun.Id);
                 jobRun.ApplyTo(entity);
@@ -282,7 +282,7 @@ namespace Jobbr.Server.RavenDB
 
         public Job GetJobById(long id)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 return session.Load<Model.Job>(id).ToModel();
             }
@@ -290,7 +290,7 @@ namespace Jobbr.Server.RavenDB
 
         public Job GetJobByUniqueName(string identifier)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var jobEntity = session.Query<Model.Job>().FirstOrDefault(p => p.UniqueName == identifier);
 
@@ -300,7 +300,7 @@ namespace Jobbr.Server.RavenDB
 
         public JobRun GetJobRunById(long id)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var jobRunEntity = session.Load<Model.JobRun>(id);
 
@@ -310,7 +310,7 @@ namespace Jobbr.Server.RavenDB
 
         public List<JobRun> GetJobRunsByUserId(string userId, int page = 0, int pageSize = 50)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var results = session.Query<JobRunIndex.Result, JobRunIndex>().Where(p => p.UserId == userId).Skip(page * pageSize).Take(pageSize).ProjectFromIndexFieldsInto<Model.JobRun>().ToList();
 
@@ -320,7 +320,7 @@ namespace Jobbr.Server.RavenDB
 
         public List<JobRun> GetJobRunsByUserDisplayName(string userDisplayName, int page = 0, int pageSize = 50)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var results = session.Query<JobRunIndex.Result, JobRunIndex>().Where(p => p.UserDisplayName == userDisplayName).Skip(page * pageSize).Take(pageSize).ProjectFromIndexFieldsInto<Model.JobRun>().ToList();
 
@@ -330,7 +330,7 @@ namespace Jobbr.Server.RavenDB
 
         public void Update(Job job)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var entity = job.ToEntity();
 
@@ -341,7 +341,7 @@ namespace Jobbr.Server.RavenDB
 
         public void Update(long jobId, InstantTrigger trigger)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var job = session.Load<Model.Job>(jobId);
 
@@ -359,7 +359,7 @@ namespace Jobbr.Server.RavenDB
 
         public void Update(long jobId, ScheduledTrigger trigger)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var job = session.Load<Model.Job>(jobId);
 
@@ -377,7 +377,7 @@ namespace Jobbr.Server.RavenDB
 
         public void Update(long jobId, RecurringTrigger trigger)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var job = session.Load<Model.Job>(jobId);
 
@@ -395,7 +395,7 @@ namespace Jobbr.Server.RavenDB
 
         public List<JobRun> GetJobRunsByTriggerId(long jobId, long triggerId, int page = 0, int pageSize = 50)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var jobIdAsString = jobId.ToRavenId(Model.Job.CollectionPrefix);
 
@@ -412,7 +412,7 @@ namespace Jobbr.Server.RavenDB
 
         public List<JobRun> GetJobRunsByState(JobRunStates state, int page = 0, int pageSize = 50)
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 var stateFromModel = (Model.JobRunStates)state;
 
@@ -428,7 +428,7 @@ namespace Jobbr.Server.RavenDB
 
         public long GetJobsCount()
         {
-            using (var session = _documentStore.OpenSession())
+            using (var session = this._documentStore.OpenSession())
             {
                 return session.Query<Model.Job>().Count();
             }

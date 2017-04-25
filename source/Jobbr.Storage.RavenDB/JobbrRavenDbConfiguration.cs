@@ -1,4 +1,4 @@
-﻿namespace Jobbr.Server.RavenDB
+﻿namespace Jobbr.Storage.RavenDB
 {
     public class JobbrRavenDbConfiguration
     {

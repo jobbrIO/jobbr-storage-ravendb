@@ -6,8 +6,8 @@
     <ProjectGuid>{4AEEDBEE-AEFD-473E-B3D9-E5C913EED3C4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Jobbr.Server.RavenDB.Tests</RootNamespace>
-    <AssemblyName>Jobbr.Server.RavenDB.Tests</AssemblyName>
+    <RootNamespace>Jobbr.Storage.RavenDB.Tests</RootNamespace>
+    <AssemblyName>Jobbr.Storage.RavenDB.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -104,9 +104,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Jobbr.Server.RavenDB\Jobbr.Server.RavenDB.csproj">
+    <ProjectReference Include="..\Jobbr.Storage.RavenDB\Jobbr.Storage.RavenDB.csproj">
       <Project>{C5A06ECA-ED05-42D8-986E-6709E67237EA}</Project>
-      <Name>Jobbr.Server.RavenDB</Name>
+      <Name>Jobbr.Storage.RavenDB</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

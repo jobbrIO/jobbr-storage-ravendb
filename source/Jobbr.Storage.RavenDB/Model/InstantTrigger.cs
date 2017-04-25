@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Jobbr.Server.RavenDB.Model
+﻿namespace Jobbr.Storage.RavenDB.Model
 {
     public class InstantTrigger : JobTriggerBase
     {

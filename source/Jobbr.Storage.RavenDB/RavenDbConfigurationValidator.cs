@@ -1,7 +1,7 @@
 ﻿using System;
 using Jobbr.ComponentModel.Registration;
 
-namespace Jobbr.Server.RavenDB
+namespace Jobbr.Storage.RavenDB
 {
     public class RavenDbConfigurationValidator : IConfigurationValidator
     {

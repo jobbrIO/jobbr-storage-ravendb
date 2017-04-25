@@ -2,7 +2,7 @@
 using System.Linq;
 using Raven.Client.Indexes;
 
-namespace Jobbr.Server.RavenDB.Model.Index
+namespace Jobbr.Storage.RavenDB.Model.Index
 {
     public class JobRunIndex : AbstractIndexCreationTask<JobRun>
     {

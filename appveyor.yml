@@ -13,7 +13,7 @@ assembly_info:
   patch: false
 
 before_build:
-  - nuget restore source/Jobbr.Server.RavenDB.sln
+  - nuget restore source/Jobbr.Storage.RavenDB.sln
   - ps: C:\ProgramData\chocolatey\lib\GitVersion.Portable\tools\GitVersion.exe /l console /output buildserver /updateAssemblyInfo
 
 platform: Any CPU
@@ -21,15 +21,15 @@ configuration: Release
 
 build:
   parallel: true 
-  project: source/Jobbr.Server.RavenDB.sln
+  project: source/Jobbr.Storage.RavenDB.sln
 
 after_build:
-  - cmd: nuget pack source\Jobbr.Server.RavenDB.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
-  - cmd: appveyor PushArtifact "Jobbr.Server.RavenDB.%GitVersion_NuGetVersion%.nupkg"
+  - cmd: nuget pack source\Jobbr.Storage.RavenDB.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
+  - cmd: appveyor PushArtifact "Jobbr.Storage.RavenDB.%GitVersion_NuGetVersion%.nupkg"
 
 test:
   assemblies:
-    - '**\bin\Release\Jobbr.Server.RavenDB.Tests.dll'
+    - '**\bin\Release\Jobbr.Storage.RavenDB.Tests.dll'
 
 deploy:
 - provider: NuGet

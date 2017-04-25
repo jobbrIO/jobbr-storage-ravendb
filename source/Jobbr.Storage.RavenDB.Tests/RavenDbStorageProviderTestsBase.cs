@@ -3,7 +3,7 @@ using System.Globalization;
 using Jobbr.ComponentModel.JobStorage.Model;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace Jobbr.Server.RavenDB.Tests
+namespace Jobbr.Storage.RavenDB.Tests
 {
     [TestClass]
     public class RavenDbStorageProviderTestsBase : RavenDbIntegrationTestBase
@@ -20,7 +20,7 @@ namespace Jobbr.Server.RavenDB.Tests
                 Type = "Jobs.Test"
             };
 
-            StorageProvider.AddJob(job);
+            this.StorageProvider.AddJob(job);
 
             Assert.AreNotEqual(0, job.Id);
         }
@@ -37,9 +37,9 @@ namespace Jobbr.Server.RavenDB.Tests
                 Type = "Jobs.Test"
             };
 
-            StorageProvider.AddJob(job);
+            this.StorageProvider.AddJob(job);
 
-            var job2 = StorageProvider.GetJobById(job.Id);
+            var job2 = this.StorageProvider.GetJobById(job.Id);
 
             Assert.AreEqual(job.Id, job2.Id);
             Assert.AreEqual("testjob", job2.UniqueName);
@@ -58,11 +58,11 @@ namespace Jobbr.Server.RavenDB.Tests
                 Type = "Jobs.Test"
             };
 
-            StorageProvider.AddJob(job);
+            this.StorageProvider.AddJob(job);
 
-            WaitForIndexing(Store);
+            WaitForIndexing(this.Store);
 
-            var job2 = StorageProvider.GetJobByUniqueName(job.UniqueName);
+            var job2 = this.StorageProvider.GetJobByUniqueName(job.UniqueName);
 
             Assert.AreEqual(job.Id, job2.Id);
             Assert.AreEqual("testjob", job2.UniqueName);
@@ -79,13 +79,13 @@ namespace Jobbr.Server.RavenDB.Tests
             var job2 = new Job { UniqueName = "testjob2", Type = "Jobs.Test2" };
             var job3 = new Job { UniqueName = "testjob3", Type = "Jobs.Test3" };
 
-            StorageProvider.AddJob(job1);
-            StorageProvider.AddJob(job2);
-            StorageProvider.AddJob(job3);
+            this.StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job2);
+            this.StorageProvider.AddJob(job3);
             
-            WaitForIndexing(Store);
+            WaitForIndexing(this.Store);
 
-            var jobs = StorageProvider.GetJobs(0, 1);
+            var jobs = this.StorageProvider.GetJobs(0, 1);
 
             Assert.AreEqual(1, jobs.Count);
             Assert.AreEqual(job1.Id, jobs[0].Id);
@@ -101,13 +101,13 @@ namespace Jobbr.Server.RavenDB.Tests
             var job2 = new Job { UniqueName = "testjob2", Type = "Jobs.Test2" };
             var job3 = new Job { UniqueName = "testjob3", Type = "Jobs.Test3" };
 
-            StorageProvider.AddJob(job1);
-            StorageProvider.AddJob(job2);
-            StorageProvider.AddJob(job3);
+            this.StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job2);
+            this.StorageProvider.AddJob(job3);
 
-            WaitForIndexing(Store);
+            WaitForIndexing(this.Store);
 
-            var jobs = StorageProvider.GetJobs(1, 1);
+            var jobs = this.StorageProvider.GetJobs(1, 1);
 
             Assert.AreEqual(1, jobs.Count);
             Assert.AreEqual(job2.Id, jobs[0].Id);
@@ -122,20 +122,20 @@ namespace Jobbr.Server.RavenDB.Tests
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
             var job2 = new Job { UniqueName = "testjob2", Type = "Jobs.Test2" };
 
-            StorageProvider.AddJob(job1);
-            StorageProvider.AddJob(job2);
+            this.StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job2);
 
             var trigger1 = new InstantTrigger { IsActive = false };
             var trigger2 = new InstantTrigger { IsActive = true };
             var trigger3 = new InstantTrigger { IsActive = true };
 
-            StorageProvider.AddTrigger(job1.Id, trigger1);
-            StorageProvider.AddTrigger(job1.Id, trigger2);
-            StorageProvider.AddTrigger(job2.Id, trigger3);
+            this.StorageProvider.AddTrigger(job1.Id, trigger1);
+            this.StorageProvider.AddTrigger(job1.Id, trigger2);
+            this.StorageProvider.AddTrigger(job2.Id, trigger3);
 
-            WaitForIndexing(Store);
+            WaitForIndexing(this.Store);
 
-            var activeTriggers = StorageProvider.GetActiveTriggers();
+            var activeTriggers = this.StorageProvider.GetActiveTriggers();
 
             Assert.AreEqual(2, activeTriggers.Count);
         }
@@ -149,21 +149,21 @@ namespace Jobbr.Server.RavenDB.Tests
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
             var job2 = new Job { UniqueName = "testjob2", Type = "Jobs.Test2" };
 
-            StorageProvider.AddJob(job1);
-            StorageProvider.AddJob(job2);
+            this.StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job2);
 
             var trigger1 = new InstantTrigger();
             var trigger2 = new InstantTrigger();
             var trigger3 = new InstantTrigger();
 
-            StorageProvider.AddTrigger(job1.Id, trigger1);
-            StorageProvider.AddTrigger(job1.Id, trigger2);
-            StorageProvider.AddTrigger(job2.Id, trigger3);
+            this.StorageProvider.AddTrigger(job1.Id, trigger1);
+            this.StorageProvider.AddTrigger(job1.Id, trigger2);
+            this.StorageProvider.AddTrigger(job2.Id, trigger3);
 
-            WaitForIndexing(Store);
+            WaitForIndexing(this.Store);
 
-            var triggersOfJob1 = StorageProvider.GetTriggersByJobId(job1.Id);
-            var triggersOfJob2 = StorageProvider.GetTriggersByJobId(job2.Id);
+            var triggersOfJob1 = this.StorageProvider.GetTriggersByJobId(job1.Id);
+            var triggersOfJob2 = this.StorageProvider.GetTriggersByJobId(job2.Id);
 
             Assert.AreEqual(2, triggersOfJob1.Count);
             Assert.AreEqual(1, triggersOfJob2.Count);
@@ -176,17 +176,17 @@ namespace Jobbr.Server.RavenDB.Tests
             GivenStorageProvider();
 
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
-            StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job1);
 
             var trigger1 = new InstantTrigger { IsActive = true };
-            StorageProvider.AddTrigger(job1.Id, trigger1);
+            this.StorageProvider.AddTrigger(job1.Id, trigger1);
 
             var jobRun1 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow };
-            StorageProvider.AddJobRun(jobRun1);
+            this.StorageProvider.AddJobRun(jobRun1);
 
-            WaitForIndexing(Store);
+            WaitForIndexing(this.Store);
 
-            var jobRun2 = StorageProvider.GetJobRunById(jobRun1.Id);
+            var jobRun2 = this.StorageProvider.GetJobRunById(jobRun1.Id);
 
             Assert.AreEqual(jobRun1.Id, jobRun2.Id);
         }
@@ -198,24 +198,24 @@ namespace Jobbr.Server.RavenDB.Tests
             GivenStorageProvider();
 
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
-            StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job1);
 
             var trigger1 = new InstantTrigger { IsActive = true };
-            StorageProvider.AddTrigger(job1.Id, trigger1);
+            this.StorageProvider.AddTrigger(job1.Id, trigger1);
 
             var jobRun1 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow };
             var jobRun2 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow };
 
-            StorageProvider.AddJobRun(jobRun1);
-            StorageProvider.AddJobRun(jobRun2);
+            this.StorageProvider.AddJobRun(jobRun1);
+            this.StorageProvider.AddJobRun(jobRun2);
 
-            WaitForIndexing(Store);
+            WaitForIndexing(this.Store);
 
-            var jobRuns = StorageProvider.GetJobRuns(0, 1);
+            var jobRuns = this.StorageProvider.GetJobRuns(0, 1);
 
             Assert.AreEqual(1, jobRuns.Count);
 
-            jobRuns = StorageProvider.GetJobRuns(0, 2);
+            jobRuns = this.StorageProvider.GetJobRuns(0, 2);
 
             WaitForUserToContinueTheTest();
 
@@ -229,22 +229,22 @@ namespace Jobbr.Server.RavenDB.Tests
             GivenStorageProvider();
 
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
-            StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job1);
 
             var trigger1 = new InstantTrigger { IsActive = true };
-            StorageProvider.AddTrigger(job1.Id, trigger1);
+            this.StorageProvider.AddTrigger(job1.Id, trigger1);
 
             var jobRun1 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Completed };
             var jobRun2 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Completed };
             var jobRun3 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Failed };
 
-            StorageProvider.AddJobRun(jobRun1);
-            StorageProvider.AddJobRun(jobRun2);
-            StorageProvider.AddJobRun(jobRun3);
+            this.StorageProvider.AddJobRun(jobRun1);
+            this.StorageProvider.AddJobRun(jobRun2);
+            this.StorageProvider.AddJobRun(jobRun3);
 
-            WaitForIndexing(Store);
+            WaitForIndexing(this.Store);
 
-            var jobRuns = StorageProvider.GetJobRunsByState(JobRunStates.Failed);
+            var jobRuns = this.StorageProvider.GetJobRunsByState(JobRunStates.Failed);
 
             Assert.AreEqual(1, jobRuns.Count);
         }
@@ -256,26 +256,26 @@ namespace Jobbr.Server.RavenDB.Tests
             GivenStorageProvider();
 
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
-            StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job1);
 
             var trigger1 = new InstantTrigger { IsActive = true };
-            StorageProvider.AddTrigger(job1.Id, trigger1);
+            this.StorageProvider.AddTrigger(job1.Id, trigger1);
 
             var jobRun1 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Completed };
             var jobRun2 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Completed };
             var jobRun3 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Failed };
 
-            StorageProvider.AddJobRun(jobRun1);
-            StorageProvider.AddJobRun(jobRun2);
-            StorageProvider.AddJobRun(jobRun3);
+            this.StorageProvider.AddJobRun(jobRun1);
+            this.StorageProvider.AddJobRun(jobRun2);
+            this.StorageProvider.AddJobRun(jobRun3);
 
-            WaitForIndexing(Store);
+            WaitForIndexing(this.Store);
 
-            var jobRuns = StorageProvider.GetJobRunsByState(JobRunStates.Completed, 0, 1);
+            var jobRuns = this.StorageProvider.GetJobRunsByState(JobRunStates.Completed, 0, 1);
 
             Assert.AreEqual(1, jobRuns.Count);
 
-            jobRuns = StorageProvider.GetJobRunsByState(JobRunStates.Completed, 0, 2);
+            jobRuns = this.StorageProvider.GetJobRunsByState(JobRunStates.Completed, 0, 2);
 
             Assert.AreEqual(2, jobRuns.Count);
         }
@@ -287,24 +287,24 @@ namespace Jobbr.Server.RavenDB.Tests
             GivenStorageProvider();
 
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
-            StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job1);
 
             var trigger1 = new InstantTrigger { IsActive = true };
-            StorageProvider.AddTrigger(job1.Id, trigger1);
+            this.StorageProvider.AddTrigger(job1.Id, trigger1);
 
             var jobRun1 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Completed };
             var jobRun2 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Completed };
             var jobRun3 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Failed };
 
-            StorageProvider.AddJobRun(jobRun1);
-            StorageProvider.AddJobRun(jobRun2);
-            StorageProvider.AddJobRun(jobRun3);
+            this.StorageProvider.AddJobRun(jobRun1);
+            this.StorageProvider.AddJobRun(jobRun2);
+            this.StorageProvider.AddJobRun(jobRun3);
 
-            WaitForIndexing(Store);
+            WaitForIndexing(this.Store);
 
             WaitForUserToContinueTheTest();
 
-            var jobRuns = StorageProvider.GetJobRunsByTriggerId(job1.Id, trigger1.Id);
+            var jobRuns = this.StorageProvider.GetJobRunsByTriggerId(job1.Id, trigger1.Id);
 
             Assert.AreEqual(3, jobRuns.Count);
         }
@@ -316,23 +316,23 @@ namespace Jobbr.Server.RavenDB.Tests
             GivenStorageProvider();
 
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
-            StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job1);
 
             var trigger1 = new InstantTrigger { IsActive = true };
 
-            StorageProvider.AddTrigger(job1.Id, trigger1);
+            this.StorageProvider.AddTrigger(job1.Id, trigger1);
 
             var jobRun1 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Completed };
             var jobRun2 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Completed };
             var jobRun3 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Failed };
 
-            StorageProvider.AddJobRun(jobRun1);
-            StorageProvider.AddJobRun(jobRun2);
-            StorageProvider.AddJobRun(jobRun3);
+            this.StorageProvider.AddJobRun(jobRun1);
+            this.StorageProvider.AddJobRun(jobRun2);
+            this.StorageProvider.AddJobRun(jobRun3);
 
-            WaitForIndexing(Store);
+            WaitForIndexing(this.Store);
 
-            var jobRuns = StorageProvider.GetJobRunsByTriggerId(job1.Id, trigger1.Id, 0, 2);
+            var jobRuns = this.StorageProvider.GetJobRunsByTriggerId(job1.Id, trigger1.Id, 0, 2);
 
             Assert.AreEqual(2, jobRuns.Count);
         }
@@ -344,23 +344,23 @@ namespace Jobbr.Server.RavenDB.Tests
             GivenStorageProvider();
 
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
-            StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job1);
 
             var trigger1 = new InstantTrigger { IsActive = true, UserDisplayName = "chefkoch" };
 
-            StorageProvider.AddTrigger(job1.Id, trigger1);
+            this.StorageProvider.AddTrigger(job1.Id, trigger1);
 
             var jobRun1 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Completed };
             var jobRun2 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Completed };
             var jobRun3 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Completed };
 
-            StorageProvider.AddJobRun(jobRun1);
-            StorageProvider.AddJobRun(jobRun2);
-            StorageProvider.AddJobRun(jobRun3);
+            this.StorageProvider.AddJobRun(jobRun1);
+            this.StorageProvider.AddJobRun(jobRun2);
+            this.StorageProvider.AddJobRun(jobRun3);
 
-            WaitForIndexing(Store);
+            WaitForIndexing(this.Store);
 
-            var jobRuns = StorageProvider.GetJobRunsByUserDisplayName("chefkoch");
+            var jobRuns = this.StorageProvider.GetJobRunsByUserDisplayName("chefkoch");
 
             Assert.AreEqual(3, jobRuns.Count);
         }
@@ -372,23 +372,23 @@ namespace Jobbr.Server.RavenDB.Tests
             GivenStorageProvider();
 
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
-            StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job1);
 
             var trigger1 = new InstantTrigger { IsActive = true, UserDisplayName = "chefkoch" };
 
-            StorageProvider.AddTrigger(job1.Id, trigger1);
+            this.StorageProvider.AddTrigger(job1.Id, trigger1);
 
             var jobRun1 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Completed };
             var jobRun2 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Completed };
             var jobRun3 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Completed };
 
-            StorageProvider.AddJobRun(jobRun1);
-            StorageProvider.AddJobRun(jobRun2);
-            StorageProvider.AddJobRun(jobRun3);
+            this.StorageProvider.AddJobRun(jobRun1);
+            this.StorageProvider.AddJobRun(jobRun2);
+            this.StorageProvider.AddJobRun(jobRun3);
 
-            WaitForIndexing(Store);
+            WaitForIndexing(this.Store);
 
-            var jobRuns = StorageProvider.GetJobRunsByUserDisplayName("chefkoch", 0, 2);
+            var jobRuns = this.StorageProvider.GetJobRunsByUserDisplayName("chefkoch", 0, 2);
 
             Assert.AreEqual(2, jobRuns.Count);
         }
@@ -401,23 +401,23 @@ namespace Jobbr.Server.RavenDB.Tests
 
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
 
-            StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job1);
 
             var trigger1 = new InstantTrigger { IsActive = true, UserId = "ozu" };
 
-            StorageProvider.AddTrigger(job1.Id, trigger1);
+            this.StorageProvider.AddTrigger(job1.Id, trigger1);
 
             var jobRun1 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Completed };
             var jobRun2 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Completed };
             var jobRun3 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Completed };
 
-            StorageProvider.AddJobRun(jobRun1);
-            StorageProvider.AddJobRun(jobRun2);
-            StorageProvider.AddJobRun(jobRun3);
+            this.StorageProvider.AddJobRun(jobRun1);
+            this.StorageProvider.AddJobRun(jobRun2);
+            this.StorageProvider.AddJobRun(jobRun3);
 
-            WaitForIndexing(Store);
+            WaitForIndexing(this.Store);
 
-            var jobRuns = StorageProvider.GetJobRunsByUserId("ozu");
+            var jobRuns = this.StorageProvider.GetJobRunsByUserId("ozu");
 
             Assert.AreEqual(3, jobRuns.Count);
         }
@@ -429,22 +429,22 @@ namespace Jobbr.Server.RavenDB.Tests
             GivenStorageProvider();
 
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
-            StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job1);
 
             var trigger1 = new InstantTrigger { IsActive = true, UserId = "ozu" };
-            StorageProvider.AddTrigger(job1.Id, trigger1);
+            this.StorageProvider.AddTrigger(job1.Id, trigger1);
 
             var jobRun1 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Completed };
             var jobRun2 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Completed };
             var jobRun3 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = DateTime.UtcNow, State = JobRunStates.Completed };
 
-            StorageProvider.AddJobRun(jobRun1);
-            StorageProvider.AddJobRun(jobRun2);
-            StorageProvider.AddJobRun(jobRun3);
+            this.StorageProvider.AddJobRun(jobRun1);
+            this.StorageProvider.AddJobRun(jobRun2);
+            this.StorageProvider.AddJobRun(jobRun3);
 
-            WaitForIndexing(Store);
+            WaitForIndexing(this.Store);
 
-            var jobRuns = StorageProvider.GetJobRunsByUserId("ozu", 0, 2);
+            var jobRuns = this.StorageProvider.GetJobRunsByUserId("ozu", 0, 2);
 
             Assert.AreEqual(2, jobRuns.Count);
         }
@@ -457,15 +457,15 @@ namespace Jobbr.Server.RavenDB.Tests
 
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
 
-            StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job1);
 
             var trigger1 = new InstantTrigger { IsActive = true };
 
-            StorageProvider.AddTrigger(job1.Id, trigger1);
+            this.StorageProvider.AddTrigger(job1.Id, trigger1);
 
-            StorageProvider.DisableTrigger(job1.Id, trigger1.Id);
+            this.StorageProvider.DisableTrigger(job1.Id, trigger1.Id);
 
-            var triggerFromDb = StorageProvider.GetTriggerById(job1.Id, trigger1.Id);
+            var triggerFromDb = this.StorageProvider.GetTriggerById(job1.Id, trigger1.Id);
 
             Assert.IsFalse(triggerFromDb.IsActive);
         }
@@ -478,14 +478,14 @@ namespace Jobbr.Server.RavenDB.Tests
 
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
 
-            StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job1);
 
             var trigger1 = new InstantTrigger { IsActive = false };
 
-            StorageProvider.AddTrigger(job1.Id, trigger1);
-            StorageProvider.EnableTrigger(job1.Id, trigger1.Id);
+            this.StorageProvider.AddTrigger(job1.Id, trigger1);
+            this.StorageProvider.EnableTrigger(job1.Id, trigger1.Id);
 
-            var triggerFromDb = StorageProvider.GetTriggerById(job1.Id, trigger1.Id);
+            var triggerFromDb = this.StorageProvider.GetTriggerById(job1.Id, trigger1.Id);
 
             Assert.IsTrue(triggerFromDb.IsActive);
         }
@@ -497,10 +497,10 @@ namespace Jobbr.Server.RavenDB.Tests
             GivenStorageProvider();
 
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
-            StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job1);
 
             var trigger1 = new InstantTrigger { IsActive = true };
-            StorageProvider.AddTrigger(job1.Id, trigger1);
+            this.StorageProvider.AddTrigger(job1.Id, trigger1);
 
             var now = DateTime.UtcNow;
 
@@ -508,13 +508,13 @@ namespace Jobbr.Server.RavenDB.Tests
             var jobRun2 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = now.AddMinutes(1), ActualStartDateTimeUtc = now.AddMinutes(1), State = JobRunStates.Completed };
             var jobRun3 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = now.AddMinutes(2), ActualStartDateTimeUtc = now.AddMinutes(2), State = JobRunStates.Completed };
 
-            StorageProvider.AddJobRun(jobRun1);
-            StorageProvider.AddJobRun(jobRun2);
-            StorageProvider.AddJobRun(jobRun3);
+            this.StorageProvider.AddJobRun(jobRun1);
+            this.StorageProvider.AddJobRun(jobRun2);
+            this.StorageProvider.AddJobRun(jobRun3);
 
-            WaitForIndexing(Store);
+            WaitForIndexing(this.Store);
 
-            var lastJobRun = StorageProvider.GetLastJobRunByTriggerId(job1.Id, trigger1.Id, now.AddSeconds(30));
+            var lastJobRun = this.StorageProvider.GetLastJobRunByTriggerId(job1.Id, trigger1.Id, now.AddSeconds(30));
 
             Assert.AreEqual(jobRun1.Id, lastJobRun.Id);
         }
@@ -526,10 +526,10 @@ namespace Jobbr.Server.RavenDB.Tests
             GivenStorageProvider();
 
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
-            StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job1);
 
             var trigger1 = new InstantTrigger { IsActive = true };
-            StorageProvider.AddTrigger(job1.Id, trigger1);
+            this.StorageProvider.AddTrigger(job1.Id, trigger1);
 
             var now = DateTime.UtcNow;
 
@@ -537,13 +537,13 @@ namespace Jobbr.Server.RavenDB.Tests
             var jobRun2 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = now.AddMinutes(1), ActualStartDateTimeUtc = now.AddMinutes(1), State = JobRunStates.Completed };
             var jobRun3 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = now.AddMinutes(2), State = JobRunStates.Scheduled };
 
-            StorageProvider.AddJobRun(jobRun1);
-            StorageProvider.AddJobRun(jobRun2);
-            StorageProvider.AddJobRun(jobRun3);
+            this.StorageProvider.AddJobRun(jobRun1);
+            this.StorageProvider.AddJobRun(jobRun2);
+            this.StorageProvider.AddJobRun(jobRun3);
 
-            WaitForIndexing(Store);
+            WaitForIndexing(this.Store);
 
-            var lastJobRun = StorageProvider.GetNextJobRunByTriggerId(job1.Id, trigger1.Id, now.AddMinutes(1));
+            var lastJobRun = this.StorageProvider.GetNextJobRunByTriggerId(job1.Id, trigger1.Id, now.AddMinutes(1));
             Assert.AreEqual(jobRun3.Id, lastJobRun.Id);
         }
 
@@ -554,19 +554,19 @@ namespace Jobbr.Server.RavenDB.Tests
             GivenStorageProvider();
 
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
-            StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job1);
 
             var trigger1 = new InstantTrigger { IsActive = true };
-            StorageProvider.AddTrigger(job1.Id, trigger1);
+            this.StorageProvider.AddTrigger(job1.Id, trigger1);
 
             var now = DateTime.UtcNow;
 
             var jobRun1 = new JobRun { JobId = job1.Id, TriggerId = trigger1.Id, PlannedStartDateTimeUtc = now, ActualStartDateTimeUtc = now, State = JobRunStates.Completed };
-            StorageProvider.AddJobRun(jobRun1);
+            this.StorageProvider.AddJobRun(jobRun1);
 
-            StorageProvider.UpdateProgress(jobRun1.Id, 50);
+            this.StorageProvider.UpdateProgress(jobRun1.Id, 50);
 
-            var jobRun2 = StorageProvider.GetJobRunById(jobRun1.Id);
+            var jobRun2 = this.StorageProvider.GetJobRunById(jobRun1.Id);
 
             Assert.AreEqual(50, jobRun2.Progress);
         }
@@ -579,16 +579,16 @@ namespace Jobbr.Server.RavenDB.Tests
 
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
 
-            StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job1);
 
             job1.UniqueName = "test-uniquename";
             job1.Title = "test-title";
             job1.Type = "test-type";
             job1.Parameters = "test-parameters";
 
-            StorageProvider.Update(job1);
+            this.StorageProvider.Update(job1);
 
-            var job1Reloaded = StorageProvider.GetJobById(job1.Id);
+            var job1Reloaded = this.StorageProvider.GetJobById(job1.Id);
 
             Assert.AreEqual("test-uniquename", job1Reloaded.UniqueName);
             Assert.AreEqual("test-title", job1Reloaded.Title);
@@ -603,13 +603,13 @@ namespace Jobbr.Server.RavenDB.Tests
             GivenStorageProvider();
 
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
-            StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job1);
 
             var trigger = new InstantTrigger { IsActive = true };
-            StorageProvider.AddTrigger(job1.Id, trigger);
+            this.StorageProvider.AddTrigger(job1.Id, trigger);
 
             var jobRun = new JobRun { JobId = job1.Id, TriggerId = trigger.Id, PlannedStartDateTimeUtc = DateTime.UtcNow };
-            StorageProvider.AddJobRun(jobRun);
+            this.StorageProvider.AddJobRun(jobRun);
 
             var newPlannedStartDate = DateTime.UtcNow;
             var newActualStartDate = newPlannedStartDate.AddSeconds(1);
@@ -623,9 +623,9 @@ namespace Jobbr.Server.RavenDB.Tests
             jobRun.EstimatedEndDateTimeUtc = newEstimatedStartDate;
             jobRun.ActualEndDateTimeUtc = newActualEndDate;
 
-            StorageProvider.Update(jobRun);
+            this.StorageProvider.Update(jobRun);
 
-            var job1Reloaded = StorageProvider.GetJobRunById(jobRun.Id);
+            var job1Reloaded = this.StorageProvider.GetJobRunById(jobRun.Id);
 
             Assert.AreEqual("test-jobparameters", job1Reloaded.JobParameters);
             Assert.AreEqual("test-instanceparameters", job1Reloaded.InstanceParameters);
@@ -642,21 +642,21 @@ namespace Jobbr.Server.RavenDB.Tests
             GivenStorageProvider();
 
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
-            StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job1);
 
             var trigger = new InstantTrigger();
-            StorageProvider.AddTrigger(job1.Id, trigger);
+            this.StorageProvider.AddTrigger(job1.Id, trigger);
 
-            var trigger2 = (InstantTrigger)StorageProvider.GetTriggerById(job1.Id, trigger.Id);
+            var trigger2 = (InstantTrigger)this.StorageProvider.GetTriggerById(job1.Id, trigger.Id);
             trigger2.Comment = "bla";
             trigger2.IsActive = true;
             trigger2.Parameters = "test-parameters";
             trigger2.UserId = "ozu";
             trigger2.DelayedMinutes = 5;
 
-            StorageProvider.Update(job1.Id, trigger2);
+            this.StorageProvider.Update(job1.Id, trigger2);
 
-            var trigger2Reloaded = (InstantTrigger)StorageProvider.GetTriggerById(job1.Id, trigger2.Id);
+            var trigger2Reloaded = (InstantTrigger)this.StorageProvider.GetTriggerById(job1.Id, trigger2.Id);
 
             Assert.AreEqual("bla", trigger2Reloaded.Comment);
             Assert.IsTrue(trigger2Reloaded.IsActive);
@@ -672,12 +672,12 @@ namespace Jobbr.Server.RavenDB.Tests
             GivenStorageProvider();
 
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
-            StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job1);
 
             var trigger = new ScheduledTrigger { StartDateTimeUtc = DateTime.UtcNow };
-            StorageProvider.AddTrigger(job1.Id, trigger);
+            this.StorageProvider.AddTrigger(job1.Id, trigger);
 
-            var trigger2 = (ScheduledTrigger)StorageProvider.GetTriggerById(job1.Id, trigger.Id);
+            var trigger2 = (ScheduledTrigger)this.StorageProvider.GetTriggerById(job1.Id, trigger.Id);
 
             var startDateTime = DateTime.UtcNow.AddHours(5);
 
@@ -687,9 +687,9 @@ namespace Jobbr.Server.RavenDB.Tests
             trigger2.UserId = "ozu";
             trigger2.StartDateTimeUtc = startDateTime;
 
-            StorageProvider.Update(job1.Id, trigger2);
+            this.StorageProvider.Update(job1.Id, trigger2);
 
-            var trigger2Reloaded = (ScheduledTrigger)StorageProvider.GetTriggerById(job1.Id, trigger2.Id);
+            var trigger2Reloaded = (ScheduledTrigger)this.StorageProvider.GetTriggerById(job1.Id, trigger2.Id);
 
             Assert.AreEqual("bla", trigger2Reloaded.Comment);
             Assert.IsTrue(trigger2Reloaded.IsActive);
@@ -705,13 +705,13 @@ namespace Jobbr.Server.RavenDB.Tests
             GivenStorageProvider();
 
             var job1 = new Job { UniqueName = "testjob1", Type = "Jobs.Test1" };
-            StorageProvider.AddJob(job1);
+            this.StorageProvider.AddJob(job1);
 
             var trigger = new RecurringTrigger();
 
-            StorageProvider.AddTrigger(job1.Id, trigger);
+            this.StorageProvider.AddTrigger(job1.Id, trigger);
 
-            var trigger2 = (RecurringTrigger)StorageProvider.GetTriggerById(job1.Id, trigger.Id);
+            var trigger2 = (RecurringTrigger)this.StorageProvider.GetTriggerById(job1.Id, trigger.Id);
 
             var startDateTime = DateTime.UtcNow.AddHours(5);
             var endDateTime = DateTime.UtcNow.AddHours(7);
@@ -725,9 +725,9 @@ namespace Jobbr.Server.RavenDB.Tests
             trigger2.EndDateTimeUtc = endDateTime;
             trigger2.NoParallelExecution = true;
 
-            StorageProvider.Update(job1.Id, trigger2);
+            this.StorageProvider.Update(job1.Id, trigger2);
 
-            var trigger2Reloaded = (RecurringTrigger)StorageProvider.GetTriggerById(job1.Id, trigger2.Id);
+            var trigger2Reloaded = (RecurringTrigger)this.StorageProvider.GetTriggerById(job1.Id, trigger2.Id);
 
             Assert.AreEqual("bla", trigger2Reloaded.Comment);
             Assert.IsTrue(trigger2Reloaded.IsActive);
@@ -745,7 +745,7 @@ namespace Jobbr.Server.RavenDB.Tests
             GivenRavenDb();
             GivenStorageProvider();
 
-            Assert.IsTrue(StorageProvider.IsAvailable());
+            Assert.IsTrue(this.StorageProvider.IsAvailable());
         }
 
         [TestMethod]
@@ -754,9 +754,9 @@ namespace Jobbr.Server.RavenDB.Tests
             GivenRavenDb();
             GivenStorageProvider();
 
-            Store.Dispose();
+            this.Store.Dispose();
 
-            Assert.IsFalse(StorageProvider.IsAvailable());
+            Assert.IsFalse(this.StorageProvider.IsAvailable());
         }
 
         [TestMethod]
@@ -771,11 +771,11 @@ namespace Jobbr.Server.RavenDB.Tests
                 Type = "Jobs.Test"
             };
 
-            StorageProvider.AddJob(job);
+            this.StorageProvider.AddJob(job);
 
-            WaitForIndexing(Store);
+            WaitForIndexing(this.Store);
 
-            var jobCount = StorageProvider.GetJobsCount();
+            var jobCount = this.StorageProvider.GetJobsCount();
 
             Assert.AreEqual(1, jobCount);
         }

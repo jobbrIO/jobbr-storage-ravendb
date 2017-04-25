@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0"?>
 <package >
   <metadata>
-    <id>Jobbr.Server.RavenDB</id>
+    <id>Jobbr.Storage.RavenDB</id>
     <version>$version$</version>
     <authors>Jobbr</authors>
     <owners>Jobbr</owners>
@@ -17,7 +17,7 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="Jobbr.Server.RavenDB/bin/Release/Jobbr.Server.RavenDB.dll" target="lib\net45"/>
-    <file src="Jobbr.Server.RavenDB/bin/Release/Jobbr.Server.RavenDB.pdb" target="lib\net45"/>
+    <file src="Jobbr.Storage.RavenDB/bin/Release/Jobbr.Storage.RavenDB.dll" target="lib\net45"/>
+    <file src="Jobbr.Storage.RavenDB/bin/Release/Jobbr.Storage.RavenDB.pdb" target="lib\net45"/>
   </files>
 </package>

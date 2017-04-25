@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Raven.Imports.Newtonsoft.Json;
 
-namespace Jobbr.Server.RavenDB.Model
+namespace Jobbr.Storage.RavenDB.Model
 {
     public class Job
     {

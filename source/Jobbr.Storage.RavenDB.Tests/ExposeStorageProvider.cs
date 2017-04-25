@@ -1,7 +1,7 @@
 ﻿using Jobbr.ComponentModel.JobStorage;
 using Jobbr.ComponentModel.Registration;
 
-namespace Jobbr.Server.RavenDB.Tests
+namespace Jobbr.Storage.RavenDB.Tests
 {
     public class ExposeStorageProvider : IJobbrComponent
     {
