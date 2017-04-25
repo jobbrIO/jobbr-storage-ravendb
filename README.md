@@ -14,13 +14,13 @@ First of all you'll need a working jobserver by using the usual builder as shown
 
 ### NuGet
 
-    Install-Package Jobbr.Server.RavenDB
+    Install-Package Jobbr.Storage.RavenDB
 
 ### Configuration
 To configure the Jobbr server to use RavenDB, use the AddRavenDbStorage extension method on JobbrBuilder:
 
 ```c#
-using Jobbr.Server.RavenDB;
+using Jobbr.Storage.RavenDB;
 
 /* ... */
 
@@ -51,10 +51,10 @@ This application was built by the following awesome developers:
 * Oliver Zürcher
 
 [ravendb-link-build]:            https://ci.appveyor.com/project/Jobbr/jobbr-storage-ravendb         
-[ravendb-link-nuget]:            https://www.nuget.org/packages/Jobbr.Server.RavenDB
+[ravendb-link-nuget]:            https://www.nuget.org/packages/Jobbr.Storage.RavenDB
 
 [ravendb-badge-build-develop]:   https://img.shields.io/appveyor/ci/Jobbr/jobbr-storage-ravendb/develop.svg?label=develop
 [ravendb-badge-build-master]:    https://img.shields.io/appveyor/ci/Jobbr/jobbr-storage-ravendb/master.svg?label=master
-[ravendb-badge-nuget]:           https://img.shields.io/nuget/v/Jobbr.Server.RavenDB.svg?label=NuGet%20stable
-[ravendb-badge-nuget-pre]:       https://img.shields.io/nuget/vpre/Jobbr.Server.RavenDB.svg?label=NuGet%20pre
+[ravendb-badge-nuget]:           https://img.shields.io/nuget/v/Jobbr.Storage.RavenDB.svg?label=NuGet%20stable
+[ravendb-badge-nuget-pre]:       https://img.shields.io/nuget/vpre/Jobbr.Storage.RavenDB.svg?label=NuGet%20pre
 
