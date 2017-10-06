@@ -11,7 +11,7 @@
     <description>Jobbr is a .NET JobServer</description>
     <copyright>Copyright 2017</copyright>
     <dependencies>
-      <dependency id="RavenDB.Client" version="[3.5.3,4)" />
+      <dependency id="RavenDB.Client" version="[3.5.4,4)" />
       <dependency id="Jobbr.ComponentModel.JobStorage" version="[1.0.0]" />
       <dependency id="Jobbr.ComponentModel.Registration" version="[1.0.0]" />
     </dependencies>
