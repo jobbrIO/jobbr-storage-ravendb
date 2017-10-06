@@ -8,13 +8,13 @@
     <projectUrl>http://github.com/jobbrIO/jobbr-storage-ravendb</projectUrl>
     <licenseUrl>https://raw.githubusercontent.com/jobbrIO/jobbr-storage-ravendb/develop/LICENSE</licenseUrl>
     <requireLicenseAcceptance>true</requireLicenseAcceptance>
-    <description>Jobbr is a .NET JobServer</description>
+    <description>Storage adapter for RavenDB</description>
     <copyright>Copyright 2017</copyright>
     <iconUrl>https://github.com/jobbrIO/artwork/raw/master/build/icons/icon_detailed_256_dark.png</iconUrl>
     <dependencies>
       <dependency id="RavenDB.Client" version="[3.5.4,4)" />
-      <dependency id="Jobbr.ComponentModel.JobStorage" version="[1.0.1]" />
-      <dependency id="Jobbr.ComponentModel.Registration" version="[1.0.1]" />
+      <dependency id="Jobbr.ComponentModel.JobStorage" version="[1,1.1)" />
+      <dependency id="Jobbr.ComponentModel.Registration" version="[1,1.1)" />
     </dependencies>
   </metadata>
   <files>
