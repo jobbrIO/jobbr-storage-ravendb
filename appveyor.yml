@@ -7,6 +7,7 @@ branches:
     - /feature/.*/
 
 install:
+  - git submodule update --init --recursive
   - choco install gitversion.portable -pre -y
 
 assembly_info:
@@ -24,8 +25,8 @@ build:
   project: source/Jobbr.Storage.RavenDB.sln
 
 after_build:
-  - cmd: nuget pack source\Jobbr.Storage.RavenDB.nuspec -version "%GitVersion_NuGetVersion%" -prop "target=%CONFIGURATION%"
-  - cmd: appveyor PushArtifact "Jobbr.Storage.RavenDB.%GitVersion_NuGetVersion%.nupkg"
+  - cmd: nuget pack source\Jobbr.Storage.RavenDB.nuspec -version "%GitVersion_SemVer%" -prop "target=%CONFIGURATION%"
+  - cmd: appveyor PushArtifact "Jobbr.Storage.RavenDB.%GitVersion_SemVer%.nupkg"
 
 test:
   assemblies:
