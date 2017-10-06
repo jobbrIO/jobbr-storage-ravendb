@@ -13,8 +13,8 @@
     <iconUrl>https://github.com/jobbrIO/artwork/raw/master/build/icons/icon_detailed_256_dark.png</iconUrl>
     <dependencies>
       <dependency id="RavenDB.Client" version="[3.5.4,4)" />
-      <dependency id="Jobbr.ComponentModel.JobStorage" version="[1.0.0]" />
-      <dependency id="Jobbr.ComponentModel.Registration" version="[1.0.0]" />
+      <dependency id="Jobbr.ComponentModel.JobStorage" version="[1.0.1]" />
+      <dependency id="Jobbr.ComponentModel.Registration" version="[1.0.1]" />
     </dependencies>
   </metadata>
   <files>
