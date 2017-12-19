@@ -5,7 +5,5 @@ branches:
   develop:
     tag: unstable
     mode: ContinuousDelivery
-  release:
-    tag: rc
 ignore:
   sha: []
