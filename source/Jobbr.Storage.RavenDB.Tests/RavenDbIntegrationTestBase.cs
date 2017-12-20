@@ -1,4 +1,4 @@
-using Raven.Client.Document;
+using Raven.Client;
 using Raven.Database.Config;
 using Raven.Tests.Helpers;
 
@@ -6,13 +6,13 @@ namespace Jobbr.Storage.RavenDB.Tests
 {
     public abstract class RavenDbIntegrationTestBase : RavenTestBase
     {
-        protected DocumentStore Store;
+        protected IDocumentStore Store;
         protected RavenDbStorageProvider StorageProvider;
 
         protected void GivenRavenDb()
         {
             // ReSharper disable once ExplicitCallerInfoArgument
-            this.Store = this.NewRemoteDocumentStore(databaseName: "JobbrTests");
+            this.Store = this.NewDocumentStore();
         }
 
         protected override void ModifyConfiguration(InMemoryRavenConfiguration configuration)
@@ -24,11 +24,7 @@ namespace Jobbr.Storage.RavenDB.Tests
 
         protected void GivenStorageProvider()
         {
-            this.StorageProvider = new RavenDbStorageProvider(new JobbrRavenDbConfiguration
-            {
-                Database = this.Store.DefaultDatabase,
-                Url = this.Store.Url
-            });
+            this.StorageProvider = new RavenDbStorageProvider(Store);
         }
     }
 }

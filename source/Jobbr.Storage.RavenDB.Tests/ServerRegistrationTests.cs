@@ -15,11 +15,7 @@ namespace Jobbr.Storage.RavenDB.Tests
             var builder = new JobbrBuilder();
             builder.Register<IJobbrComponent>(typeof(ExposeStorageProvider));
 
-            builder.AddRavenDbStorage(config =>
-            {
-                config.Database = this.Store.DefaultDatabase;
-                config.Url = this.Store.Url;
-            });
+            builder.AddRavenDbStorage(Store);
 
             builder.Create();
 
@@ -34,11 +30,7 @@ namespace Jobbr.Storage.RavenDB.Tests
             var builder = new JobbrBuilder();
             builder.Register<IJobbrComponent>(typeof(ExposeStorageProvider));
 
-            builder.AddRavenDbStorage(config =>
-            {
-                config.Database = this.Store.DefaultDatabase;
-                config.Url = this.Store.Url;
-            });
+            builder.AddRavenDbStorage(Store);
 
             using (var server = builder.Create())
             {

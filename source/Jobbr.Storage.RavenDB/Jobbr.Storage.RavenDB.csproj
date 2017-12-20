@@ -55,7 +55,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="JobbrBuilderExtensions.cs" />
-    <Compile Include="JobbrRavenDbConfiguration.cs" />
     <Compile Include="Model\Index\JobRunIndex.cs" />
     <Compile Include="Model\Index\TriggerIndex.cs" />
     <Compile Include="Model\InstantTrigger.cs" />
@@ -67,7 +66,6 @@
     <Compile Include="Model\RecurringTrigger.cs" />
     <Compile Include="Model\ScheduledTrigger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RavenDbConfigurationValidator.cs" />
     <Compile Include="RavenDbStorageProvider.cs" />
     <Compile Include="RavenExtensions.cs" />
   </ItemGroup>

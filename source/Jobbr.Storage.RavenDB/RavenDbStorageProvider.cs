@@ -6,7 +6,6 @@ using Jobbr.ComponentModel.JobStorage.Model;
 using Jobbr.Storage.RavenDB.Mapping;
 using Jobbr.Storage.RavenDB.Model.Index;
 using Raven.Client;
-using Raven.Client.Document;
 using Raven.Client.Indexes;
 using Raven.Client.Linq;
 
@@ -14,18 +13,11 @@ namespace Jobbr.Storage.RavenDB
 {
     public class RavenDbStorageProvider : IJobStorageProvider
     {
-        private readonly DocumentStore _documentStore;
+        private readonly IDocumentStore _documentStore;
 
-        public RavenDbStorageProvider(JobbrRavenDbConfiguration configuration)
+        public RavenDbStorageProvider(IDocumentStore store)
         {
-            this._documentStore = new DocumentStore
-            {
-                Url = configuration.Url,
-                DefaultDatabase = configuration.Database
-            };
-
-            this._documentStore.Initialize(true);
-
+            _documentStore = store;
             IndexCreation.CreateIndexes(typeof(RavenDbStorageProvider).Assembly, this._documentStore);
         }
 
