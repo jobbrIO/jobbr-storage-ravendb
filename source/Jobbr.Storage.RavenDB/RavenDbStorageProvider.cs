@@ -304,7 +304,7 @@ namespace Jobbr.Storage.RavenDB
         {
             using (var session = this._documentStore.OpenSession())
             {
-                var results = session.Query<JobRunIndex.Result, JobRunIndex>().Where(p => p.UserId == userId).Skip(page * pageSize).Take(pageSize).ProjectFromIndexFieldsInto<Model.JobRun>().ToList();
+                var results = session.Query<JobRunIndex.Result, JobRunIndex>().OrderByDescending(o => o.PlannedStartDateTimeUtc).Where(p => p.UserId == userId).Skip(page * pageSize).Take(pageSize).As<Model.JobRun>().ToList();
 
                 return results.Select(s => s.ToModel()).ToList();
             }
@@ -314,7 +314,7 @@ namespace Jobbr.Storage.RavenDB
         {
             using (var session = this._documentStore.OpenSession())
             {
-                var results = session.Query<JobRunIndex.Result, JobRunIndex>().Where(p => p.UserDisplayName == userDisplayName).Skip(page * pageSize).Take(pageSize).ProjectFromIndexFieldsInto<Model.JobRun>().ToList();
+                var results = session.Query<JobRunIndex.Result, JobRunIndex>().OrderByDescending(o => o.PlannedStartDateTimeUtc).Where(p => p.UserDisplayName == userDisplayName).Skip(page * pageSize).Take(pageSize).As<Model.JobRun>().ToList();
 
                 return results.Select(s => s.ToModel()).ToList();
             }
@@ -393,9 +393,10 @@ namespace Jobbr.Storage.RavenDB
 
                 return session.Query<JobRunIndex.Result, JobRunIndex>()
                     .Where(p => p.JobId == jobIdAsString && p.TriggerId == triggerId)
+                    .OrderByDescending(o => o.PlannedStartDateTimeUtc)
                     .Skip(page * pageSize)
                     .Take(pageSize)
-                    .ProjectFromIndexFieldsInto<Model.JobRun>()
+                    .As<Model.JobRun>()
                     .ToList()
                     .Select(s => s.ToModel())
                     .ToList();
@@ -410,6 +411,7 @@ namespace Jobbr.Storage.RavenDB
 
                 return session.Query<Model.JobRun>()
                     .Where(p => p.State == stateFromModel)
+                    .OrderByDescending(o => o.PlannedStartDateTimeUtc)
                     .Skip(page * pageSize)
                     .Take(pageSize)
                     .ToList()
