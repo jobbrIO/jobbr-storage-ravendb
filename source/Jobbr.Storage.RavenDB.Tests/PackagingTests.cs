@@ -7,9 +7,9 @@ namespace Jobbr.Storage.RavenDB.Tests
     public class PackagingTests
     {
         [TestMethod]
-        public void Feature_NuSpec_IsCompilant()
+        public void Feature_NuSpec_IsCompliant()
         {
-            var asserter = new Asserter(Asserter.ResolvePackagesConfig("Jobbr.Storage.RavenDB"), Asserter.ResolveRootFile("Jobbr.Storage.RavenDB.nuspec"));
+            var asserter = new Asserter(Asserter.ResolveProjectFile("Jobbr.Storage.RavenDB", "Jobbr.Storage.RavenDB.csproj"), Asserter.ResolveRootFile("Jobbr.Storage.RavenDB.nuspec"));
 
             asserter.Add(new PackageExistsInBothRule("Jobbr.ComponentModel.Registration"));
             asserter.Add(new PackageExistsInBothRule("Jobbr.ComponentModel.JobStorage"));
