@@ -36,7 +36,7 @@ after_build:
 
 test:
   assemblies:
-    - '**\bin\Release\Jobbr.Storage.RavenDB.Tests.dll'
+    - '**\bin\Release\net462\Jobbr.Storage.RavenDB.Tests.dll'
 
 deploy:
 - provider: NuGet
