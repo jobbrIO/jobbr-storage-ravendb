@@ -22,6 +22,6 @@
   <ItemGroup>
     <PackageReference Include="Jobbr.ComponentModel.JobStorage" Version="1.0.1" />
     <PackageReference Include="Jobbr.ComponentModel.Registration" Version="1.0.1" />
-    <PackageReference Include="RavenDB.Client" Version="3.5.4" />
+    <PackageReference Include="RavenDB.Client" Version="3.5.9" />
   </ItemGroup>
 </Project>
